@@ -1,0 +1,266 @@
+{
+  "version": "0.4",
+  "title": "Bewerbungs-Onepager – Ing. Manfred Foissner (Komplett)",
+  "type": "page",
+  "content": [
+    {
+      "id": "sec_style_gate",
+      "elType": "section",
+      "isInner": false,
+      "settings": {
+        "layout": "boxed",
+        "content_width": "boxed",
+        "gap": "no",
+        "css_classes": "section-wrap"
+      },
+      "elements": [
+        {
+          "id": "col_style",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "w_style",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<style>\n:root{--bg:#0e0f12;--panel:#16181d;--text:#e8eaed;--muted:#9aa0a6;--accent:#e84e0f;--line:#2a2f36}\nbody{background:var(--bg);color:var(--text)}\n.section-wrap{max-width:1100px;margin:0 auto;padding:28px}\n.chip{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border:1px solid var(--line);border-radius:999px;background:#121418;color:#e8eaed;font-weight:600;box-shadow:0 1px 0 rgba(255,255,255,.03) inset,0 6px 16px rgba(0,0,0,.25);transition:.2s}\n.chip:hover{border-color:var(--accent);box-shadow:0 0 0 1px rgba(232,78,15,.35)}\n.card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.25),inset 0 1px 0 rgba(255,255,255,.02)}\nh1{font-size:34px;line-height:1.15;margin:12px 0 6px}\nh2{font-size:22px;margin:0 0 8px}\np{color:var(--muted)}.muted{color:var(--muted)}\n.badge{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);padding:6px 10px;border-radius:999px;font-size:12px;color:var(--muted)}\n.badge .dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}\n.tag{display:inline-block;font-size:12px;color:#cbd5e1;border:1px solid var(--line);padding:4px 8px;border-radius:999px;margin:0 6px 6px 0}\n.hr{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:26px 0}\n.btn{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:#121418;color:#e8eaed;transition:.2s;box-shadow:0 1px 0 rgba(255,255,255,.03) inset,0 8px 20px rgba(0,0,0,.35)}\n.btn:hover{transform:translateY(-1px)}\n.btn--accent{background:var(--accent);color:#fff;border-color:transparent;box-shadow:0 0 0 2px rgba(232,78,15,.18) inset,0 10px 24px rgba(232,78,15,.38)}\n.btn--accent:hover{box-shadow:0 0 0 2px rgba(232,78,15,.28) inset,0 14px 30px rgba(232,78,15,.5)}\n.op-list{display:grid;gap:10px;margin-top:10px;padding:0}\n.op-list li{list-style:none;padding:12px;border:1px dashed var(--line);border-radius:14px}\nhtml{scroll-behavior:smooth}\n.anchor{scroll-margin-top:96px}\n.toast{position:fixed;right:18px;bottom:18px;background:#121418;border:1px solid var(--line);padding:12px 14px;border-radius:12px;color:#e8eaed;opacity:0;transform:translateY(8px);transition:.25s;z-index:9999}\n.toast.show{opacity:1;transform:translateY(0)}\n</style>\n<script>(function(){function toast(m){var t=document.querySelector('.toast');if(!t){t=document.createElement('div');t.className='toast';document.body.appendChild(t);}t.textContent=m||'Link kopiert';t.classList.add('show');setTimeout(function(){t.classList.remove('show');},1600);}function resolveURL(x){try{if(/^https?:\\/\\//i.test(x))return x;if(location.origin&&/^https?:/i.test(location.origin))return new URL(x,location.origin).toString();return x;}catch(e){return x;}}document.addEventListener('click',function(e){var c=e.target.closest('[data-copy]');if(c){var v=resolveURL(c.getAttribute('data-copy')||'');if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(v).then(function(){toast('Link kopiert');},function(){toast('Link kopiert');});}else{var ta=document.createElement('textarea');ta.value=v;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');}catch(err){}document.body.removeChild(ta);toast('Link kopiert');}}var u=e.target.closest('[data-unlock]');if(u){var wrap=u.closest('[data-private-wrap]');if(!wrap)return;var input=wrap.querySelector('input[type=\"password\"]');var pass=wrap.getAttribute('data-pass')||'manfred2025';var panel=document.querySelector('[data-private-panel]');var typed=input&&input.value?input.value.replace(/^\\s+|\\s+$/g,''):'';if(panel&&typed===pass){panel.style.display='block';toast('Freigeschaltet');}else{toast('Falsches Passwort');}}});var y=document.getElementById('year');if(y){y.textContent=(new Date()).getFullYear();}})();</script>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sec_nav",
+      "elType": "section",
+      "settings": { "layout": "boxed", "content_width": "boxed", "gap": "no", "css_classes": "section-wrap" },
+      "elements": [
+        {
+          "id": "col_nav",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            {
+              "id": "w_nav",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<a class='chip' href='#profil'>Profil</a> <a class='chip' href='#expertise'>Expertise</a> <a class='chip' href='#erfolge'>Erfolge</a> <a class='chip' href='#downloads'>Downloads</a> <a class='chip' href='#kontakt'>Kontakt</a> <a class='chip' href='#vertraulich'>Vertraulich</a>",
+                "align": "right"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sec_hero",
+      "elType": "section",
+      "settings": { "layout": "boxed", "content_width": "boxed", "gap": "no", "css_classes": "section-wrap anchor", "css_id": "hero" },
+      "elements": [
+        {
+          "id": "col_hero_left",
+          "elType": "column",
+          "settings": { "_column_size": 50, "css_classes": "card" },
+          "elements": [
+            { "id": "w_badge", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "<span class='badge'><span class='dot'></span> Verfügbar ab sofort • offen für DACH</span>" } },
+            { "id": "w_h1", "elType": "widget", "widgetType": "heading", "settings": { "title": "Ing. Manfred Foissner", "header_size": "h1" } },
+            { "id": "w_h2", "elType": "widget", "widgetType": "heading", "settings": { "title": "Engineering & Sales Leadership • Gleitlager-Expertise • Coaching-Mindset", "header_size": "h2" } },
+            { "id": "w_intro", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "25+ Jahre Industrieerfahrung zwischen Werkstattboden und Geschäftsführung. Internationaler Vertrieb, Anlagentechnik, Gleitlagertechnologie (CuSn-Bronze, Metall-Polymer). Führt Teams mit Klarheit, Humor und belastbaren Zahlen." } },
+            { "id": "w_btn_pdf", "elType": "widget", "widgetType": "button", "settings": { "text": "PDF-Mappe herunterladen", "link": { "url": "#downloads" }, "css_classes": "btn btn--accent" } },
+            { "id": "w_btn_call", "elType": "widget", "widgetType": "button", "settings": { "text": "Kennenlernen", "link": { "url": "#kontakt" }, "css_classes": "btn" } },
+            { "id": "w_tags", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "<span class='tag'>B2B Sales</span> <span class='tag'>Business Development</span> <span class='tag'>Anlagentechnik</span> <span class='tag'>Gleitlager</span> <span class='tag'>Coaching (ICF-aligned)</span>" } }
+          ]
+        },
+        {
+          "id": "col_hero_right",
+          "elType": "column",
+          "settings": { "_column_size": 50, "css_classes": "card" },
+          "elements": [
+            { "id": "w_kurz", "elType": "widget", "widgetType": "heading", "settings": { "title": "Kurzprofil", "header_size": "h3" } },
+            { "id": "w_kurztext", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "Ingenieur & Vertriebsleiter mit Hands-on-DNA. Ich skaliere Geschäft mit sauberem Funnel, klaren Angeboten und verlässlichen Lieferketten. Technisch sattelfest, rhetorisch messerscharf, verlässlich in der Umsetzung." } },
+            { "id": "w_hr", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "<div class='hr'></div><div class='muted'>Schnellzugriff</div>" } },
+            { "id": "w_btn_linkedin", "elType": "widget", "widgetType": "button", "settings": { "text": "LinkedIn", "link": { "url": "https://www.linkedin.com/" }, "css_classes": "btn" } },
+            { "id": "w_btn_dl", "elType": "widget", "widgetType": "button", "settings": { "text": "Downloads", "link": { "url": "#downloads" }, "css_classes": "btn" } },
+            { "id": "w_btn_priv", "elType": "widget", "widgetType": "button", "settings": { "text": "Vertraulich", "link": { "url": "#vertraulich" }, "css_classes": "btn" } }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sec_profil",
+      "elType": "section",
+      "settings": { "layout": "boxed", "content_width": "boxed", "gap": "no", "css_classes": "section-wrap anchor", "css_id": "profil" },
+      "elements": [
+        {
+          "id": "col_profil_a",
+          "elType": "column",
+          "settings": { "_column_size": 50, "css_classes": "card" },
+          "elements": [
+            { "id": "w_p1", "elType": "widget", "widgetType": "heading", "settings": { "title": "Wertbeitrag in 60 Sekunden", "header_size": "h2" } },
+            { "id": "w_p1_list", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "<ul class='op-list'><li><strong>Umsatzwachstum:</strong> Pipeline-Aufbau & Abschlussstärke im DACH-Mittelstand.</li><li><strong>Technik + Business:</strong> Gleitlager, Anlagentechnik, Fertigungs-Know-how trifft Preisstrategie.</li><li><strong>Lieferfähigkeit:</strong> pragmatische Make-or-Buy-Entscheidungen, Kanban-/Bestands-Basics.</li><li><strong>Führung:</strong> Klarer Kurs, Feedbackkultur, Coaching-Haltung – messbar an Team-KPIs.</li></ul>" } }
+          ]
+        },
+        {
+          "id": "col_profil_b",
+          "elType": "column",
+          "settings": { "_column_size": 50, "css_classes": "card" },
+          "elements": [
+            { "id": "w_p2", "elType": "widget", "widgetType": "heading", "settings": { "title": "Rollenfokus", "header_size": "h2" } },
+            { "id": "w_p2_tbl", "elType": "widget", "widgetType": "html", "settings": { "html": "<table style='width:100%;border-collapse:collapse;font-size:14px'><tr><th style='text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)'>Rolle</th><th style='text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)'>Passend weil</th></tr><tr><td style='padding:10px 12px;border-bottom:1px solid var(--line)'>Sales Manager / Head of Sales</td><td style='padding:10px 12px;border-bottom:1px solid var(--line)'>Funnel-Disziplin, Closing, Key-Accounts, Forecast.</td></tr><tr><td style='padding:10px 12px;border-bottom:1px solid var(--line)'>Business Development</td><td style='padding:10px 12px;border-bottom:1px solid var(--line)'>Markteintritt, Partneraufbau, Pricing & Pack</td></tr><tr><td style='padding:10px 12px'>Technical Sales (Gleitlager/Anlagen)</td><td style='padding:10px 12px'>Tiefe Produktkenntnis, PV-Faktor, Normen</td></tr></table>" } }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sec_expertise",
+      "elType": "section",
+      "settings": { "layout": "boxed", "content_width": "boxed", "gap": "no", "css_classes": "section-wrap anchor", "css_id": "expertise" },
+      "elements": [
+        {
+          "id": "col_exp_1",
+          "elType": "column",
+          "settings": { "_column_size": 33, "css_classes": "card" },
+          "elements": [
+            { "id": "w_e1", "elType": "widget", "widgetType": "heading", "settings": { "title": "Kernkompetenzen", "header_size": "h2" } },
+            { "id": "w_e1_list", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "<ul class='op-list'><li>B2B-Vertrieb • Key Account • Forecast & Funnel</li><li>Gleitlager (CuSn8/10, PTFE-Composite, Stahl-Rücken)</li><li>Angebotskalkulation • Preislogik • Rahmenverträge</li><li>Supply-Chain • Qualität • Lieferantensteuerung</li></ul>" } }
+          ]
+        },
+        {
+          "id": "col_exp_2",
+          "elType": "column",
+          "settings": { "_column_size": 33, "css_classes": "card" },
+          "elements": [
+            { "id": "w_e2", "elType": "widget", "widgetType": "heading", "settings": { "title": "Werkzeuge & Sprachen", "header_size": "h2" } },
+            { "id": "w_e2_list", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "<ul class='op-list'><li>CRM (HubSpot, Pipedrive), Excel/Sheets (Modellierung)</li><li>CAD/Zeichnungslesen, Normen DIN/ISO</li><li>Deutsch (C2), Englisch (C1), Basic CZ</li></ul>" } }
+          ]
+        },
+        {
+          "id": "col_exp_3",
+          "elType": "column",
+          "settings": { "_column_size": 33, "css_classes": "card" },
+          "elements": [
+            { "id": "w_e3", "elType": "widget", "widgetType": "heading", "settings": { "title": "Branchen", "header_size": "h2" } },
+            { "id": "w_e3_list", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "<ul class='op-list'><li>Maschinenbau, Hydropower, Forestry & Agriculture</li><li>Antriebstechnik, OEM/MRO, Sondermaschinen</li></ul>" } }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sec_erfolge",
+      "elType": "section",
+      "settings": { "layout": "boxed", "content_width": "boxed", "gap": "no", "css_classes": "section-wrap anchor", "css_id": "erfolge" },
+      "elements": [
+        {
+          "id": "col_erg_l",
+          "elType": "column",
+          "settings": { "_column_size": 50, "css_classes": "card" },
+          "elements": [
+            { "id": "w_erf_h", "elType": "widget", "widgetType": "heading", "settings": { "title": "Ausgewählte Erfolge", "header_size": "h2" } },
+            { "id": "w_erf_list", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "<ul class='op-list'><li>Aufbau von >€X Mio. Neugeschäft in &lt;12 Monaten (DACH).</li><li>Lieferkette stabilisiert: On-time-Delivery +18 pp.</li><li>Rahmenvertrag verhandelt, Marge +4–7 pp.</li><li>Technische Re-Designs zur Lebensdauererhöhung (&gt;+30 %).</li></ul><p class='muted'>* Platzhalter – Zahlen schärfen wir gemeinsam nach.</p>" } }
+          ]
+        },
+        {
+          "id": "col_erg_r",
+          "elType": "column",
+          "settings": { "_column_size": 50, "css_classes": "card" },
+          "elements": [
+            {
+              "id": "w_acc",
+              "elType": "widget",
+              "widgetType": "accordion",
+              "settings": {
+                "accordion_type": "accordion",
+                "tabs": [
+                  { "tab_title": "„Strukturiert, direkt, liefert.“", "tab_content": "<p class='muted'>Name auf Anfrage • Ex-Kunde OEM</p>" },
+                  { "tab_title": "„Verbindet Werkbank & Vorstandsetage.“", "tab_content": "<p class='muted'>Name auf Anfrage • Lieferant APAC</p>" }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sec_downloads",
+      "elType": "section",
+      "settings": { "layout": "boxed", "content_width": "boxed", "gap": "no", "css_classes": "section-wrap anchor", "css_id": "downloads" },
+      "elements": [
+        {
+          "id": "col_dl",
+          "elType": "column",
+          "settings": { "_column_size": 100, "css_classes": "card" },
+          "elements": [
+            { "id": "w_dl_h", "elType": "widget", "widgetType": "heading", "settings": { "title": "Downloads", "header_size": "h2" } },
+            {
+              "id": "w_dl_list",
+              "elType": "widget",
+              "widgetType": "text-editor",
+              "settings": {
+                "editor": "<ul class='op-list' style='margin-top:10px'>\n<li><div style='display:flex;gap:12px;align-items:center;flex-wrap:wrap'>\n  <a class='btn btn--accent' href='/assets/CV_ManfredFoissner.pdf' download>Lebenslauf (PDF)</a>\n  <a class='btn' href='#' data-copy='/assets/CV_ManfredFoissner.pdf'>Link kopieren</a>\n  <span class='muted' style='font-size:12px'>Platzhalter – Datei folgt</span>\n</div></li>\n<li><div style='display:flex;gap:12px;align-items:center;flex-wrap:wrap'>\n  <a class='btn btn--accent' href='/assets/Zeugnisse_Foissner.pdf' download>Zeugnisse (PDF)</a>\n  <a class='btn' href='#' data-copy='/assets/Zeugnisse_Foissner.pdf'>Link kopieren</a>\n  <span class='muted' style='font-size:12px'>Platzhalter</span>\n</div></li>\n</ul>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sec_kontakt",
+      "elType": "section",
+      "settings": { "layout": "boxed", "content_width": "boxed", "gap": "no", "css_classes": "section-wrap anchor", "css_id": "kontakt" },
+      "elements": [
+        {
+          "id": "col_kontakt_l",
+          "elType": "column",
+          "settings": { "_column_size": 50, "css_classes": "card" },
+          "elements": [
+            { "id": "w_k_h", "elType": "widget", "widgetType": "heading", "settings": { "title": "Kontakt", "header_size": "h2" } },
+            { "id": "w_loc", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "<p class='muted'>Pottenstein an der Triesting, Österreich</p>" } },
+            { "id": "w_btn_mail", "elType": "widget", "widgetType": "button", "settings": { "text": "E-Mail", "link": { "url": "mailto:manfred.foissner@gmail.com" }, "css_classes": "btn btn--accent" } },
+            { "id": "w_btn_tel", "elType": "widget", "widgetType": "button", "settings": { "text": "Anrufen", "link": { "url": "tel:+436763776322" }, "css_classes": "btn" } }
+          ]
+        },
+        {
+          "id": "col_kontakt_r",
+          "elType": "column",
+          "settings": { "_column_size": 50, "css_classes": "card" },
+          "elements": [
+            { "id": "w_priv_h", "elType": "widget", "widgetType": "heading", "settings": { "title": "Vertraulicher Bereich", "header_size": "h2" } },
+            {
+              "id": "w_priv_gate",
+              "elType": "widget",
+              "widgetType": "html",
+              "settings": {
+                "html": "<div data-private-wrap data-pass='manfred2025'>\n  <p class='muted'>Unterlagen auf Anfrage. Zugang leichtgewichtig geschützt.</p>\n  <div style='display:grid;grid-template-columns:1fr auto;gap:12px'>\n    <input type='password' placeholder='Passwort' style='padding:12px;border-radius:12px;border:1px solid var(--line);background:#0f1115;color:#e8eaed'>\n    <a class='btn btn--accent' href='#' data-unlock>Freischalten</a>\n  </div>\n</div>\n<div data-private-panel style='display:none;margin-top:12px'>\n  <ul class='op-list'>\n    <li>Projekt-Dossiers – Details zu Redesigns, Stücklisten, Margenwirkung.</li>\n    <li>Vertrauliche Referenzschreiben – einsehbar nach Absprache.</li>\n    <li>Kalk-Modelle (Excel) – Beispielhafte Angebotslogiken.</li>\n  </ul>\n</div>"
+              }
+            }
+          ]
+        }
+      ]
+    },
+
+    {
+      "id": "sec_footer",
+      "elType": "section",
+      "settings": { "layout": "boxed", "content_width": "boxed", "gap": "no", "css_classes": "section-wrap" },
+      "elements": [
+        {
+          "id": "col_footer",
+          "elType": "column",
+          "settings": { "_column_size": 100 },
+          "elements": [
+            { "id": "w_foot", "elType": "widget", "widgetType": "text-editor", "settings": { "editor": "© <span id='year'></span> Manfred Foissner • Single-File Style-Kit (Elementor)" } }
+          ]
+        }
+      ]
+    }
+  ]
+}
