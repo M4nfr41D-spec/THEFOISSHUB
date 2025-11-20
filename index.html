@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Growth Control Tower</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page">
+    <header class="app-header">
+      <div>
+        <p class="eyebrow">GPT-5.1 Generated</p>
+        <h1>Revenue & Pipeline Control Tower</h1>
+        <p class="muted">Fully interactive dashboard prototype with live filtering, theming, and exploratory views.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn ghost" id="refresh-data" aria-label="Refresh data">↻ Refresh</button>
+        <button class="btn" id="theme-toggle" aria-label="Toggle light or dark mode">🌙 Dark mode</button>
+      </div>
+    </header>
+
+    <section class="panel filters" aria-label="Filters">
+      <div class="filters__group">
+        <label class="label" for="timeframe">Timeframe</label>
+        <select id="timeframe" class="input">
+          <option value="3">Last 3 months</option>
+          <option value="6">Last 6 months</option>
+          <option value="12" selected>Last 12 months</option>
+        </select>
+      </div>
+      <div class="filters__group">
+        <label class="label" for="region">Region</label>
+        <select id="region" class="input">
+          <option value="all" selected>All regions</option>
+          <option value="amer">Americas</option>
+          <option value="emea">EMEA</option>
+          <option value="apac">APAC</option>
+        </select>
+      </div>
+      <div class="filters__group">
+        <span class="label">Segment</span>
+        <label class="chip">
+          <input type="checkbox" name="segment" value="enterprise" checked>
+          <span>Enterprise</span>
+        </label>
+        <label class="chip">
+          <input type="checkbox" name="segment" value="smb" checked>
+          <span>SMB</span>
+        </label>
+      </div>
+      <div class="filters__group">
+        <label class="label" for="search">Search deals</label>
+        <input id="search" class="input" placeholder="Find account or owner" />
+      </div>
+    </section>
+
+    <section class="grid kpis" aria-label="Key metrics">
+      <article class="panel kpi" id="kpi-revenue">
+        <div class="kpi__label">Closed revenue</div>
+        <div class="kpi__value" data-field="value">$0</div>
+        <div class="kpi__delta" data-field="delta">0%</div>
+      </article>
+      <article class="panel kpi" id="kpi-pipeline">
+        <div class="kpi__label">Pipeline coverage</div>
+        <div class="kpi__value" data-field="value">$0</div>
+        <div class="kpi__delta" data-field="delta">0%</div>
+      </article>
+      <article class="panel kpi" id="kpi-winrate">
+        <div class="kpi__label">Win rate</div>
+        <div class="kpi__value" data-field="value">0%</div>
+        <div class="kpi__delta" data-field="delta">0%</div>
+      </article>
+      <article class="panel kpi" id="kpi-churn">
+        <div class="kpi__label">Logo retention</div>
+        <div class="kpi__value" data-field="value">0%</div>
+        <div class="kpi__delta" data-field="delta">0%</div>
+      </article>
+    </section>
+
+    <section class="grid charts" aria-label="Charts">
+      <article class="panel">
+        <div class="panel__head">
+          <h2>Revenue trend</h2>
+          <span class="muted" id="trend-caption">—</span>
+        </div>
+        <canvas id="trend-chart" height="220" role="img" aria-label="Revenue trend line chart"></canvas>
+      </article>
+      <article class="panel">
+        <div class="panel__head">
+          <h2>Pipeline by stage</h2>
+          <span class="muted">Current funnel mix</span>
+        </div>
+        <canvas id="stage-chart" height="220" role="img" aria-label="Pipeline by stage bar chart"></canvas>
+      </article>
+      <article class="panel">
+        <div class="panel__head">
+          <h2>Product mix</h2>
+          <span class="muted">Weighted by revenue</span>
+        </div>
+        <canvas id="product-chart" height="220" role="img" aria-label="Product mix donut chart"></canvas>
+      </article>
+    </section>
+
+    <section class="panel" aria-label="Investment and seasonality framework">
+      <div class="panel__head">
+        <div>
+          <h2>Investment ROI & Saisonfaktoren (5 Jahre)</h2>
+          <p class="muted">Farbschema aus dem BusinessCase: Primärblau, Sekundärgrün, Akzent-Orange und Grau für Hintergründe.</p>
+        </div>
+        <button class="btn ghost" id="reset-forecast">Reset factors</button>
+      </div>
+
+      <div class="grid roi-grid">
+        <article class="kpi roi-card" id="kpi-roi-revenue">
+          <div class="kpi__label">Umsatz Jahr 1</div>
+          <div class="kpi__value" data-field="value">€0</div>
+          <div class="kpi__delta" data-field="delta">Baseline: 265.000 €</div>
+        </article>
+        <article class="kpi roi-card" id="kpi-roi-costs">
+          <div class="kpi__label">Kosten Jahr 1</div>
+          <div class="kpi__value" data-field="value">€0</div>
+          <div class="kpi__delta" data-field="delta">Setup + laufend: 163.186 €</div>
+        </article>
+        <article class="kpi roi-card" id="kpi-roi-margin">
+          <div class="kpi__label">Deckungsbeitrag Jahr 1</div>
+          <div class="kpi__value" data-field="value">€0</div>
+          <div class="kpi__delta" data-field="delta">Kumuliert 5 Jahre: 1.972.024 €</div>
+        </article>
+        <article class="kpi roi-card" id="kpi-roi-multiplier">
+          <div class="kpi__label">ROI nach 5 Jahren</div>
+          <div class="kpi__value" data-field="value">0%</div>
+          <div class="kpi__delta" data-field="delta">Ziel > 150 %</div>
+        </article>
+      </div>
+
+      <div class="grid roi-charts">
+        <article class="panel muted-panel">
+          <div class="panel__head">
+            <h3>Jahres-ROI & Zusatzumsatz</h3>
+            <span class="muted">Saisonale Faktoren + Ramp-up über 5 Jahre</span>
+          </div>
+          <canvas id="roi-chart" height="240" role="img" aria-label="ROI over 5 years"></canvas>
+        </article>
+        <article class="panel muted-panel">
+          <div class="panel__head">
+            <h3>Saison- & Ramp-up-Faktoren</h3>
+            <span class="muted">12-Monats-Pattern + Wachstumshebel</span>
+          </div>
+          <div class="seasonality">
+            <div class="seasonality__legend">
+              <span class="chip color-primary">Primär (Umsatz)</span>
+              <span class="chip color-green">Ramp-up</span>
+              <span class="chip color-orange">Saison</span>
+            </div>
+            <canvas id="seasonality-chart" height="220" role="img" aria-label="Seasonality pattern"></canvas>
+            <div class="seasonality__table" aria-label="Seasonality factors table">
+              <div class="seasonality__row seasonality__row--head">
+                <span>Monat</span><span>Saison</span><span>Ramp-up</span><span>Multiplikator</span>
+              </div>
+              <div id="seasonality-rows"></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Opportunities table">
+      <div class="panel__head">
+        <h2>Top opportunities</h2>
+        <span class="muted" id="table-caption">—</span>
+      </div>
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Account</th>
+              <th>Region</th>
+              <th>Segment</th>
+              <th>Stage</th>
+              <th class="numeric">Amount</th>
+              <th class="numeric">Probability</th>
+            </tr>
+          </thead>
+          <tbody id="deal-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <section class="panel" aria-label="Activity feed">
+      <div class="panel__head">
+        <h2>Signals feed</h2>
+        <span class="muted">Recent health and intent signals</span>
+      </div>
+      <ul class="feed" id="feed"></ul>
+    </section>
+  </div>
+
+  <div class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js" integrity="sha256-OKpYBoJ7nFpXjFhs+6IHu6td+VYW6ZVHLngwo3PtZWc=" crossorigin="anonymous"></script>
+  <script src="scripts.js"></script>
+</body>
+</html>
