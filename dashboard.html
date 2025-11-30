@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <title>BusinessCase – GGT Sales Manager AT·CE·SEE · Dashboard v5.6</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <style>
+      :root {
+        --bg-page: #f2f5fa;
+        --bg-card: #ffffff;
+        --border: #c8d0dd;
+        --text-main: #0f283f;
+        --text-muted: #6c7888;
+        --blue: #0066a3;
+        --blue-strong: #00527f;
+        --blue-soft: #e3f0fb;
+        --green: #39a844;
+        --orange: #ff7f2a;
+        --shadow: 0 10px 30px rgba(12, 32, 60, 0.25);
+        --radius-lg: 16px;
+        --radius-md: 12px;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+      }
+      body {
+        background: var(--bg-page);
+        color: var(--text-main);
+        padding: 16px;
+        display: flex;
+        justify-content: center;
+        min-height: 100vh;
+      }
+      .frame {
+        position: relative;
+        width: 100%;
+        max-width: 1920px;
+        background: linear-gradient(
+          135deg,
+          #f7f9fc 0,
+          #edf2f8 45%,
+          #f7f9fc 100%
+        );
+        border-radius: 18px;
+        padding: 18px 20px;
+        box-shadow: var(--shadow);
+        display: grid;
+        grid-template-rows: auto auto 1fr auto;
+        gap: 10px;
+        overflow: hidden;
+      }
+
+      /* HEADER – blauer Balken */
+      header {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 10px;
+        align-items: flex-start;
+        background: var(--blue-strong);
+        color: #fff;
+        padding: 10px 14px;
+        border-radius: 12px;
+      }
+      header h1 {
+        font-size: 22px;
+        font-weight: 600;
+        color: #fff;
+      }
+      header span.sub {
+        font-size: 12px;
+        color: #e1e9f5;
+        display: block;
+        margin-top: 3px;
+      }
+      .header-controls {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        align-items: center;
+      }
+      .badge {
+        font-size: 11px;
+        padding: 4px 10px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.16);
+        color: #f3f7ff;
+      }
+      select,
+      button {
+        font-size: 12px;
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid var(--border);
+        background: #fff;
+        cursor: pointer;
+      }
+      .btn-primary {
+        background: var(--blue);
+        color: #fff;
+        border-color: #004a79;
+        font-weight: 600;
+      }
+      .btn-ghost {
+        background: transparent;
+      }
+      /* Buttons im blauen Header: weiße Schrift */
+      .header-controls .btn-ghost {
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.5);
+      }
+
+      .horizon-control {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 11px;
+        color: #fff;
+      }
+      .horizon-control input[type="range"] {
+        width: 110px;
+        accent-color: #ff7f2a;
+      }
+
+      .kpi-row {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 10px;
+      }
+      .kpi {
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
+        padding: 8px 10px;
+        border: 1px solid var(--border);
+        box-shadow: 0 4px 12px rgba(15, 40, 63, 0.18);
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+      .kpi-label {
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--text-muted);
+      }
+      .kpi-value {
+        font-size: 20px;
+        font-weight: 600;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
+        gap: 6px;
+      }
+      .kpi-value span.secondary {
+        font-size: 13px;
+        font-weight: 500;
+        color: var(--text-muted);
+      }
+      .kpi-sub {
+        font-size: 11px;
+        color: var(--text-muted);
+        display: flex;
+        justify-content: space-between;
+      }
+      .pill {
+        padding: 1px 6px;
+        border-radius: 999px;
+        font-size: 10px;
+      }
+      .pill-up {
+        border: 1px solid #9ad58c;
+        background: #eef9ec;
+        color: #2f8a25;
+      }
+      .pill-info {
+        border: 1px solid var(--border);
+        background: #edf1f7;
+        color: var(--text-muted);
+      }
+      .main-grid {
+        display: grid;
+        grid-template-columns: 2.1fr 1.1fr;
+        gap: 10px;
+        height: 100%;
+        min-height: 0;
+      }
+      .panel {
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
+        padding: 10px 12px;
+        border: 1px solid var(--border);
+        box-shadow: 0 8px 18px rgba(12, 32, 60, 0.22);
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+      }
+      .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 6px;
+      }
+      .panel-title {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .panel-sub {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
+      .tabs {
+        display: flex;
+        gap: 4px;
+      }
+      .tab,
+      .tab-year {
+        font-size: 11px;
+        padding: 3px 8px;
+        border-radius: 999px;
+        background: transparent;
+        color: var(--text-muted);
+        cursor: pointer;
+        border: 1px solid transparent;
+      }
+      .tab.active,
+      .tab-year.active {
+        background: var(--blue-soft);
+        border-color: var(--blue);
+        color: var(--blue);
+      }
+      .chart {
+        flex: 1;
+        min-height: 260px;
+      }
+      .lower-grid {
+        display: grid;
+        grid-template-columns: 1.6fr 1.4fr 1fr;
+        gap: 10px;
+        margin-top: 8px;
+        min-height: 0;
+      }
+      .break-card {
+        background: var(--bg-card);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--border);
+        padding: 10px 12px;
+        box-shadow: 0 6px 16px rgba(12, 32, 60, 0.2);
+        font-size: 11px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+      }
+      .break-card h3 {
+        font-size: 13px;
+        font-weight: 500;
+      }
+      .break-value {
+        font-size: 22px;
+        font-weight: 600;
+        color: var(--blue);
+      }
+      .break-note {
+        color: var(--text-muted);
+        line-height: 1.35;
+      }
+      .cost-legend {
+        font-size: 11px;
+        color: var(--text-muted);
+        margin-top: 6px;
+      }
+      .dot {
+        display: inline-block;
+        width: 9px;
+        height: 9px;
+        border-radius: 50%;
+        margin-right: 4px;
+        vertical-align: middle;
+      }
+      .dot-setup {
+        background: #8b9ec5;
+      }
+      .dot-run {
+        background: #39a844;
+      }
+      .dot-salary {
+        background: #39a844;
+      }
+      .dot-car {
+        background: #2d8ab7;
+      }
+      .dot-travel {
+        background: #ff7f2a;
+      }
+      .dot-other {
+        background: #b9bec9;
+      }
+      .cost-charts {
+        display: flex;
+        gap: 8px;
+        margin-top: 4px;
+      }
+      .cost-chart {
+        flex: 1;
+        min-height: 180px;
+      }
+      .cost-kpi-block {
+        margin-top: 8px;
+        padding-top: 6px;
+        border-top: 1px solid #e0e6f0;
+        font-size: 11px;
+      }
+      .cost-kpi-title {
+        font-weight: 600;
+        margin-bottom: 4px;
+      }
+      .cost-kpi-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 6px;
+        margin-top: 2px;
+      }
+      .overlay {
+        position: absolute;
+        inset: 0;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background: rgba(9, 23, 40, 0.3);
+        z-index: 50;
+      }
+      .overlay.visible {
+        display: flex;
+      }
+      .input-panel {
+        width: 1000px;
+        max-width: 95%;
+        max-height: 90%;
+        background: #fff;
+        border-radius: 18px;
+        padding: 16px 18px;
+        box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35);
+        border: 1px solid var(--border);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: 8px;
+        overflow: hidden;
+      }
+      .input-grid {
+        overflow-y: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px 18px;
+        padding-right: 4px;
+      }
+      .input-group {
+        border-radius: 12px;
+        border: 1px solid #dde2eb;
+        padding: 8px 10px;
+        background: #f7f9fc;
+      }
+      .input-group h4 {
+        font-size: 12px;
+        margin-bottom: 4px;
+        color: var(--text-main);
+      }
+      .input-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 3px;
+        gap: 6px;
+        font-size: 11px;
+      }
+      .input-row label {
+        color: var(--text-muted);
+        flex: 1;
+      }
+      .input-row input {
+        width: 110px;
+        font-size: 11px;
+        padding: 3px 6px;
+        border-radius: 6px;
+        border: 1px solid #c7cfdd;
+      }
+      .input-footer {
+        display: flex;
+        justify-content: flex-end;
+        gap: 8px;
+        margin-top: 4px;
+      }
+
+      /* Druck-Parameterblock */
+      .input-summary {
+        margin-top: 10px;
+        background: #ffffff;
+        border-radius: 12px;
+        border: 1px solid #d5dde9;
+        padding: 10px 12px;
+        font-size: 11px;
+        display: none; /* nur im Druck sichtbar */
+      }
+      .input-summary h3 {
+        font-size: 13px;
+        margin-bottom: 6px;
+      }
+      .input-summary-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 4px 16px;
+      }
+      .input-summary-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 6px;
+      }
+      .input-summary-row span.label {
+        color: var(--text-muted);
+      }
+      .input-summary-row span.value {
+        font-weight: 500;
+      }
+
+      @media (max-width: 1200px) {
+        .kpi-row {
+          grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+        .main-grid {
+          grid-template-columns: 1.4fr 1fr;
+        }
+      }
+      @media (max-width: 1024px) {
+        .lower-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 900px) {
+        body {
+          padding: 8px;
+        }
+        .frame {
+          padding: 12px;
+          border-radius: 12px;
+        }
+        .main-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media (max-width: 600px) {
+        header {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .kpi-row {
+          grid-template-columns: 1fr;
+        }
+        .cost-charts {
+          flex-direction: column;
+        }
+      }
+
+      /* PRINT-LAYOUT */
+      @media print {
+        body {
+          background: #ffffff;
+          padding: 0;
+        }
+        .frame {
+          box-shadow: none;
+          border-radius: 0;
+          padding: 10mm;
+          background: #ffffff;
+        }
+        header {
+          border-radius: 0;
+        }
+        .input-summary {
+          display: block;
+        }
+        .overlay {
+          display: none !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="frame">
+      <div class="overlay" id="overlay">
+        <div class="input-panel">
+          <div
+            class="input-header"
+            style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;"
+          >
+            <div>
+              <h3 style="font-size: 14px">Parameter & Annahmen</h3>
+              <span
+                style="
+                  font-size: 11px;
+                  color: var(--text-muted);
+                "
+                >v5.6 – Kosten & Umsatzstruktur</span
+              >
+            </div>
+            <button class="btn-ghost" id="btnCloseOverlay">Schließen</button>
+          </div>
+          <div class="input-grid">
+            <!-- B) Umsatz- & Marktblock -->
+            <div class="input-group">
+              <h4>B) Umsatz – Neugeschäft</h4>
+              <div class="input-row">
+                <label>Target-Umsatz Jahr 1 (Neugeschäft)</label>
+                <input id="inpRevY1" type="number" value="265000" />
+              </div>
+              <div class="input-row">
+                <label>Wachstum Jahr 2 (%)</label>
+                <input id="gY2" type="number" value="20" />
+              </div>
+              <div class="input-row">
+                <label>Wachstum Jahr 3 (%)</label>
+                <input id="gY3" type="number" value="20" />
+              </div>
+              <div class="input-row">
+                <label>Wachstum Jahr 4 (%)</label>
+                <input id="gY4" type="number" value="20" />
+              </div>
+              <div class="input-row">
+                <label>Wachstum Jahr 5 (%)</label>
+                <input id="gY5" type="number" value="20" />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <h4>B) Umsatz – Historischer Bestand</h4>
+              <div class="input-row">
+                <label>Historischer Gebietsumsatz p.a. (Basisjahr)</label>
+                <input id="inpHistBase" type="number" value="0" />
+              </div>
+              <div class="input-row">
+                <label>Ø Historische Umsatzentwicklung (% p.a.)</label>
+                <input id="inpHistGrowth" type="number" value="0" />
+              </div>
+              <div class="input-row">
+                <label>Monatsverlauf (Saison · % vom Jahresumsatz)</label>
+                <input
+                  id="mPattern"
+                  type="text"
+                  value="6 / 6 / 7 / 8 / 9 / 10 / 10 / 9 / 8 / 8 / 6 / 5"
+                />
+              </div>
+            </div>
+
+            <!-- A) Kostenblock – laufend -->
+            <div class="input-group">
+              <h4>A) Laufende Kosten (p.a.)
+              </h4>
+              <div class="input-row">
+                <label>Gehalt inkl. AG-Kosten (14×)</label>
+                <input id="cSalary" type="number" value="115000" />
+              </div>
+              <div class="input-row">
+                <label>KFZ-Leasing & Betrieb</label>
+                <input id="cCar" type="number" value="13800" />
+              </div>
+              <div class="input-row">
+                <label>Reisekosten gesamt</label>
+                <input id="cTravel" type="number" value="13904" />
+              </div>
+              <div class="input-row">
+                <label>Büro (Miete)</label>
+                <input id="cOffice" type="number" value="3600" />
+              </div>
+              <div class="input-row">
+                <label>Kommunikation</label>
+                <input id="cComm" type="number" value="960" />
+              </div>
+              <div class="input-row">
+                <label>Büromaterialien</label>
+                <input id="cSupplies" type="number" value="132" />
+              </div>
+              <div class="input-row">
+                <label>Sonstiges laufend</label>
+                <input id="cOtherRun" type="number" value="240" />
+              </div>
+            </div>
+
+            <!-- A) Kostenblock – Setup -->
+            <div class="input-group">
+              <h4>A) Setup-Kosten (einmalig Jahr 1)</h4>
+              <div class="input-row">
+                <label>KFZ-Anzahlung</label>
+                <input id="sCar" type="number" value="12000" />
+              </div>
+              <div class="input-row">
+                <label>Laptop & IT</label>
+                <input id="sLaptop" type="number" value="1800" />
+              </div>
+              <div class="input-row">
+                <label>Monitore</label>
+                <input id="sMon" type="number" value="500" />
+              </div>
+              <div class="input-row">
+                <label>Schreibtisch etc.</label>
+                <input id="sDesk" type="number" value="650" />
+              </div>
+              <div class="input-row">
+                <label>Rollcontainer</label>
+                <input id="sCont" type="number" value="200" />
+              </div>
+              <div class="input-row">
+                <label>Musterregale</label>
+                <input id="sShelves" type="number" value="400" />
+              </div>
+              <div class="input-row">
+                <label>Sonstige Setup</label>
+                <input id="sOther" type="number" value="0" />
+              </div>
+            </div>
+          </div>
+          <div class="input-footer">
+            <button class="btn-ghost" id="btnReset">Standard</button>
+            <button class="btn-primary" id="btnApply">Übernehmen</button>
+          </div>
+        </div>
+      </div>
+
+      <header>
+        <div>
+          <h1>BusinessCase – GGT Sales Manager AT·CE·SEE</h1>
+          <span class="sub"
+            >Investition, Wachstum & ROI · Dashboard v5.6 (korrigiert &
+            optimiert)</span
+          >
+        </div>
+        <div class="header-controls">
+          <span class="badge">v5.6</span>
+          <select id="scenarioSelect">
+            <option value="0.8">Worst-Case · 0,8×</option>
+            <option value="1.0" selected>Mid-Case · Basis</option>
+            <option value="1.2">Best-Case · 1,2×</option>
+          </select>
+
+          <div class="horizon-control">
+            <span>Horizont: <span id="horizonLabel">5 Jahre</span></span>
+            <input
+              type="range"
+              id="yearHorizon"
+              min="1"
+              max="5"
+              step="1"
+              value="5"
+            />
+          </div>
+
+          <button class="btn-ghost" id="btnOpenOverlay">
+            Parameter ändern
+          </button>
+          <button class="btn-ghost" id="btnOpenOverlay2">
+            Kosten anpassen
+          </button>
+          <button class="btn-ghost" id="btnPrint">PDF / Print</button>
+        </div>
+      </header>
+
+      <section class="kpi-row">
+        <div class="kpi">
+          <div class="kpi-label">Umsatz Horizont (Neugeschäft)</div>
+          <div class="kpi-value" id="kpiRevY5">-</div>
+          <div class="kpi-sub">
+            <span>vs. Jahr 1</span>
+            <span class="pill pill-up" id="kpiRevGrowth">-</span>
+          </div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Kum. Umsätze Neugeschäft (Horizont)</div>
+          <div class="kpi-value" id="kpiCumRev">-</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Kumulierte Kosten (Headcount)</div>
+          <div class="kpi-value" id="kpiCumCost">-</div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">Kum. Deckungsbeitrag</div>
+          <div class="kpi-value" id="kpiCumDB">-</div>
+          <div class="kpi-sub">
+            <span>Zeithorizont</span>
+            <span class="pill pill-up" id="kpiDBRatio">-</span>
+          </div>
+        </div>
+        <div class="kpi">
+          <div class="kpi-label">ROI im Horizont</div>
+          <div class="kpi-value">
+            <span id="kpiROI5">-</span>
+            <span id="kpiROI5Abs" class="secondary">-</span>
+          </div>
+          <div class="kpi-sub">
+            <span>Umsatz / Kosten</span>
+            <span class="pill pill-info" id="kpiROINote">-</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="main-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Umsatz & Deckungsbeitrag</div>
+              <div class="panel-sub">Kumuliert | Jährlich | Monatlich</div>
+            </div>
+            <div class="tabs">
+              <button class="tab active" data-view="cum">Kumuliert</button>
+              <button class="tab" data-view="yearly">Jährlich</button>
+              <button class="tab" data-view="monthly">Monatlich</button>
+            </div>
+          </div>
+          <div id="chartMain" class="chart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Kostenblöcke & Struktur</div>
+              <div class="panel-sub">
+                Setup vs. laufend · sowie laufende Kosten im Detail
+              </div>
+            </div>
+          </div>
+          <div class="cost-charts">
+            <div id="chartCostsTotal" class="cost-chart"></div>
+            <div id="chartCostsDetail" class="cost-chart"></div>
+          </div>
+          <div class="cost-legend">
+            <div>
+              <span class="dot dot-setup"></span>Setup-Kosten (Jahr 1 einmalig)
+            </div>
+            <div><span class="dot dot-run"></span>Laufende Kosten p.a.</div>
+            <div style="margin-top: 4px">
+              <span class="dot dot-salary"></span>Gehalt
+              <span class="dot dot-car"></span>KFZ
+              <span class="dot dot-travel"></span>Reisen
+              <span class="dot dot-other"></span>übrige laufende Kosten
+            </div>
+          </div>
+          <div class="cost-kpi-block">
+            <div class="cost-kpi-title">
+              Kennzahlen · gewählter Zeithorizont
+            </div>
+            <div class="cost-kpi-row">
+              <span>Neuer Umsatz (kum.)</span>
+              <span id="sumNewRev">-</span>
+            </div>
+            <div class="cost-kpi-row">
+              <span>Historischer Umsatz (kum.)</span>
+              <span id="sumHistRev">-</span>
+            </div>
+            <div class="cost-kpi-row">
+              <span>Gesamtumsatz (neu + historisch)</span>
+              <span id="sumTotalRev">-</span>
+            </div>
+            <div class="cost-kpi-row">
+              <span>Headcount-Kosten (kum.)</span>
+              <span id="sumTotalCost">-</span>
+            </div>
+            <div class="cost-kpi-row">
+              <span>ROI (nur Neugeschäft)</span>
+              <span id="sumROI">-</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="lower-grid">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Quartalsumsätze Jahr 1–5</div>
+          </div>
+          <div id="chartQuarter" class="chart"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-header">
+            <div>
+              <div class="panel-title">Monatsverlauf</div>
+              <div class="panel-sub" id="monthYearLabel">Jahr 1</div>
+            </div>
+            <div class="tabs">
+              <button class="tab-year active" data-year="1">J1</button>
+              <button class="tab-year" data-year="2">J2</button>
+              <button class="tab-year" data-year="3">J3</button>
+              <button class="tab-year" data-year="4">J4</button>
+              <button class="tab-year" data-year="5">J5</button>
+            </div>
+          </div>
+          <div id="chartMonth" class="chart"></div>
+        </div>
+        <div class="break-card">
+          <h3>Break-even</h3>
+          <div class="break-value" id="beValue">-</div>
+          <div class="break-note">
+            Erster Monat, in dem kumulierter Umsatz die kumulierten Kosten
+            übersteigt.<br />
+            <b>Hinweis:</b> Unternehmens-Overheads sind nicht eingerechnet.
+          </div>
+        </div>
+      </section>
+
+      <!-- Parameter-Übersicht für Ausdruck -->
+      <section class="input-summary" id="inputSummary">
+        <h3>Parameterübersicht (für Ausdruck)</h3>
+        <div class="input-summary-grid">
+          <div class="input-summary-row">
+            <span class="label">Target-Umsatz Jahr 1 (Neu)</span>
+            <span class="value" id="pRevY1">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Wachstum Y2–Y5</span>
+            <span class="value" id="pGrowth">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Hist. Gebietsumsatz p.a.</span>
+            <span class="value" id="pHistBase">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Ø hist. Wachstum p.a.</span>
+            <span class="value" id="pHistGrowth">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Monatsverlauf (Saison)</span>
+            <span class="value" id="pPattern">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Gehalt inkl. AG (14×)</span>
+            <span class="value" id="pSalary">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">KFZ-Leasing & Betrieb</span>
+            <span class="value" id="pCar">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Reisekosten gesamt</span>
+            <span class="value" id="pTravel">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Büro (Miete)</span>
+            <span class="value" id="pOffice">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Kommunikation</span>
+            <span class="value" id="pComm">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Büromaterialien</span>
+            <span class="value" id="pSupplies">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Sonstiges laufend</span>
+            <span class="value" id="pOtherRun">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Setup: KFZ-Anzahlung</span>
+            <span class="value" id="pSCar">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Setup: Laptop & IT</span>
+            <span class="value" id="pSLaptop">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Setup: Monitore</span>
+            <span class="value" id="pSMon">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Setup: Schreibtisch</span>
+            <span class="value" id="pSDesk">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Setup: Rollcontainer</span>
+            <span class="value" id="pSCont">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Setup: Musterregale</span>
+            <span class="value" id="pSShelves">-</span>
+          </div>
+          <div class="input-summary-row">
+            <span class="label">Setup: Sonstiges</span>
+            <span class="value" id="pSOther">-</span>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      const BREAK_EVEN_MAX_MONTHS = 60;
+
+      // ==================== DEFAULTS ====================
+      const defaults = {
+        revY1: 265000,
+        growth: [0.2, 0.2, 0.2, 0.2], // Y2–Y5
+        histBase: 0,
+        histGrowth: 0,
+        costs: {
+          salary: 115000,
+          car: 13800,
+          travel: 13904,
+          office: 3600,
+          comm: 960,
+          supplies: 132,
+          otherRun: 240,
+        },
+        setup: {
+          sCar: 12000,
+          sLaptop: 1800,
+          sMon: 500,
+          sDesk: 650,
+          sCont: 200,
+          sShelves: 400,
+          sOther: 0,
+        },
+        mPattern: [6, 6, 7, 8, 9, 10, 10, 9, 8, 8, 6, 5],
+      };
+
+      let state = {
+        revY1: defaults.revY1,
+        growth: defaults.growth.slice(),
+        histBase: defaults.histBase,
+        histGrowth: defaults.histGrowth,
+        scenario: 1.0,
+        costs: { ...defaults.costs },
+        setup: { ...defaults.setup },
+        mPattern: defaults.mPattern.slice(),
+        monthYear: 1,
+        yearHorizon: 5,
+      };
+
+      // ==================== HELPERS ====================
+      const fmt = (v) =>
+        v.toLocaleString("de-AT", { maximumFractionDigits: 0 }) + " €";
+
+      function normalizePattern(arr) {
+        const sum = arr.reduce((a, b) => a + b, 0);
+        return sum === 0 ? defaults.mPattern.slice() : arr.map((x) => x / sum);
+      }
+
+      function parsePattern(str) {
+        if (!str) return defaults.mPattern.slice();
+        const nums = str
+          .split(/[;,\/ ]+/)
+          .map((s) => parseFloat(s))
+          .filter((n) => !isNaN(n));
+        return nums.length === 12 ? nums : defaults.mPattern.slice();
+      }
+
+      // Jahr-1-Ramp-up: erste 6 Monate gedrückt, Rest verteilt
+      function buildYear1RampPattern(basePattern) {
+        const p = basePattern.slice();
+        const factors = [0.05, 0.25, 0.5, 0.7, 0.9, 0.95];
+        let reduced = 0;
+        for (let i = 0; i < 6; i++) {
+          const original = p[i];
+          const adjusted = original * factors[i];
+          p[i] = adjusted;
+          reduced += original - adjusted;
+        }
+        const tailBase = basePattern.slice(6);
+        const tailSum = tailBase.reduce((a, b) => a + b, 0);
+        if (tailSum > 0 && reduced > 0) {
+          for (let m = 6; m < 12; m++) {
+            const share = basePattern[m] / tailSum;
+            p[m] += reduced * share;
+          }
+        }
+        const sum = p.reduce((a, b) => a + b, 0);
+        return p.map((x) => x / sum);
+      }
+
+      // ==================== CORE CALCULATION ====================
+      function recompute() {
+        const s = state.scenario;
+        const revY1 = state.revY1 * s;
+
+        const horizonYears = Math.min(
+          Math.max(state.yearHorizon || 5, 1),
+          5
+        );
+        const idx = horizonYears - 1;
+
+        // Halte Monats-Tab innerhalb des Zeithorizonts
+        state.monthYear = Math.min(Math.max(state.monthYear, 1), horizonYears);
+        syncMonthTabs(horizonYears);
+
+        // Jährliche Umsätze Neugeschäft
+        const rev = [revY1];
+        for (let i = 1; i < 5; i++)
+          rev.push(rev[i - 1] * (1 + state.growth[i - 1]));
+
+        const annualRunCost = Object.values(state.costs).reduce(
+          (a, b) => a + b,
+          0
+        );
+        const setupCost = Object.values(state.setup).reduce(
+          (a, b) => a + b,
+          0
+        );
+
+        const cost = [annualRunCost + setupCost];
+        for (let i = 1; i < 5; i++) cost.push(annualRunCost);
+
+        const dbYear = rev.map((r, i) => r - cost[i]);
+
+        const cumRev = [],
+          cumCost = [],
+          cumDb = [];
+        let aR = 0,
+          aC = 0,
+          aD = 0;
+        for (let i = 0; i < 5; i++) {
+          aR += rev[i];
+          aC += cost[i];
+          aD += dbYear[i];
+          cumRev.push(aR);
+          cumCost.push(aC);
+          cumDb.push(aD);
+        }
+
+        // Historischer Umsatz (Bestand) – nur für Auswertung, nicht ROI
+        const histAnnual = [];
+        const hg = state.histGrowth;
+        for (let i = 0; i < 5; i++) {
+          histAnnual[i] = state.histBase * Math.pow(1 + hg, i);
+        }
+        const histCum = [];
+        let h = 0;
+        for (let i = 0; i < 5; i++) {
+          h += histAnnual[i];
+          histCum.push(h);
+        }
+
+        // Saisonmuster
+        const basePattern = normalizePattern(state.mPattern);
+        const patternY1 = buildYear1RampPattern(basePattern);
+
+        const monthlyRevAll = [];
+        const monthlyCostAll = [];
+
+        const otherRunAnnual = annualRunCost - state.costs.salary;
+        const otherMonthly = otherRunAnnual / 12;
+        const salaryTotal = state.costs.salary;
+        const salaryBase = salaryTotal / 14; // 14 Gehälter
+
+        for (let y = 0; y < 5; y++) {
+          const yearRev = rev[y];
+          const pattern = y === 0 ? patternY1 : basePattern;
+
+          for (let m = 0; m < 12; m++) {
+            // Umsatz
+            const r = yearRev * pattern[m];
+            monthlyRevAll.push(r);
+
+            // Kosten: Setup nur in Jahr 1 / Monat 1
+            const setupPart = y === 0 && m === 0 ? setupCost : 0;
+
+            let salaryMonth = salaryBase;
+            if (m === 5 || m === 10) salaryMonth += salaryBase; // 13. & 14. Gehalt
+
+            const c = setupPart + salaryMonth + otherMonthly;
+            monthlyCostAll.push(c);
+          }
+        }
+
+        // Monatlicher DB = Umsatz – echte Kosten
+        const monthlyDbAll = monthlyRevAll.map(
+          (v, i) => v - monthlyCostAll[i]
+        );
+
+        // Break-even: kumulierter Umsatz vs. kumulierte Kosten
+        let cumR = 0,
+          cumC = 0,
+          beMonth = -1;
+        for (
+          let i = 0;
+          i < Math.min(monthlyRevAll.length, BREAK_EVEN_MAX_MONTHS);
+          i++
+        ) {
+          cumR += monthlyRevAll[i];
+          cumC += monthlyCostAll[i];
+          if (cumR >= cumC && beMonth === -1) beMonth = i;
+        }
+
+        const beLabel =
+          beMonth === -1
+            ? `> ${BREAK_EVEN_MAX_MONTHS} Monate`
+            : `Monat ${(beMonth % 12) + 1} · Jahr ${
+                Math.floor(beMonth / 12) + 1
+              }`;
+
+        // KPIs oben – auf Horizont idx
+        document.getElementById("kpiRevY5").textContent = fmt(rev[idx]);
+        document.getElementById("kpiRevGrowth").textContent =
+          "+" + ((rev[idx] / rev[0] - 1) * 100).toFixed(0) + " %";
+        document.getElementById("kpiCumRev").textContent = fmt(cumRev[idx]);
+        document.getElementById("kpiCumCost").textContent = fmt(cumCost[idx]);
+        document.getElementById("kpiCumDB").textContent = fmt(cumDb[idx]);
+        document.getElementById("kpiDBRatio").textContent =
+          ((cumDb[idx] / cumRev[idx]) * 100).toFixed(0) + " %";
+
+        const roiPct =
+          ((cumRev[idx] / cumCost[idx]) * 100).toFixed(0) + " %";
+        const roiAbs = cumRev[idx] - cumCost[idx];
+
+        document.getElementById("kpiROI5").textContent = roiPct;
+        const roiAbsEl = document.getElementById("kpiROI5Abs");
+        if (roiAbsEl) roiAbsEl.textContent = fmt(roiAbs);
+
+        document.getElementById("kpiROINote").textContent =
+          "Break-even: " + beLabel;
+        document.getElementById("beValue").textContent = beLabel;
+
+        // Zusätzlicher KPI-Block im Kostenpanel
+        const sumNewRev = document.getElementById("sumNewRev");
+        if (sumNewRev) {
+          sumNewRev.textContent = fmt(cumRev[idx]);
+          document.getElementById("sumHistRev").textContent =
+            histCum[idx] > 0 ? fmt(histCum[idx]) : "–";
+          document.getElementById("sumTotalRev").textContent = fmt(
+            cumRev[idx] + histCum[idx]
+          );
+          document.getElementById("sumTotalCost").textContent = fmt(
+            cumCost[idx]
+          );
+          document.getElementById("sumROI").textContent = roiPct;
+        }
+
+        const mRevY1 = monthlyRevAll.slice(0, 12);
+        const mDbY1 = monthlyDbAll.slice(0, 12);
+
+        // Parameter-Summary für Druck füllen
+        fillInputSummary();
+
+        updateCharts(
+          rev,
+          cost,
+          dbYear,
+          cumRev,
+          cumCost,
+          cumDb,
+          mRevY1,
+          mDbY1,
+          annualRunCost,
+          setupCost,
+          monthlyRevAll,
+          monthlyDbAll,
+          horizonYears
+        );
+      }
+
+      function fillInputSummary() {
+        function setText(id, text) {
+          const el = document.getElementById(id);
+          if (el) el.textContent = text;
+        }
+        setText("pRevY1", fmt(state.revY1));
+        setText(
+          "pGrowth",
+          state.growth.map((g) => (g * 100).toFixed(0) + " %").join(" / ")
+        );
+        setText("pHistBase", state.histBase ? fmt(state.histBase) : "0 €");
+        setText(
+          "pHistGrowth",
+          (state.histGrowth * 100).toFixed(1).replace(".", ",") + " %"
+        );
+        setText("pPattern", state.mPattern.join(" / ") + " %");
+
+        setText("pSalary", fmt(state.costs.salary));
+        setText("pCar", fmt(state.costs.car));
+        setText("pTravel", fmt(state.costs.travel));
+        setText("pOffice", fmt(state.costs.office));
+        setText("pComm", fmt(state.costs.comm));
+        setText("pSupplies", fmt(state.costs.supplies));
+        setText("pOtherRun", fmt(state.costs.otherRun));
+
+        setText("pSCar", fmt(state.setup.sCar));
+        setText("pSLaptop", fmt(state.setup.sLaptop));
+        setText("pSMon", fmt(state.setup.sMon));
+        setText("pSDesk", fmt(state.setup.sDesk));
+        setText("pSCont", fmt(state.setup.sCont));
+        setText("pSShelves", fmt(state.setup.sShelves));
+        setText("pSOther", fmt(state.setup.sOther));
+      }
+
+      // ==================== CHARTS ====================
+      const charts = {};
+      [
+        "chartMain",
+        "chartCostsTotal",
+        "chartCostsDetail",
+        "chartQuarter",
+        "chartMonth",
+      ].forEach(
+        (id) => (charts[id] = echarts.init(document.getElementById(id)))
+      );
+
+      function updateCharts(
+        rev,
+        cost,
+        db,
+        cumRev,
+        cumCost,
+        cumDb,
+        mRevY1,
+        mDbY1,
+        runCost,
+        setupCost,
+        monthlyRevAll,
+        monthlyDbAll,
+        horizonYears
+      ) {
+        const years = ["Jahr 1", "Jahr 2", "Jahr 3", "Jahr 4", "Jahr 5"];
+        const view = document.querySelector(".tab.active").dataset.view;
+        const idx = horizonYears - 1;
+
+        const yearsSlice = years.slice(0, horizonYears);
+        const cumRevSlice = cumRev.slice(0, horizonYears);
+        const cumCostSlice = cumCost.slice(0, horizonYears);
+        const cumDbSlice = cumDb.slice(0, horizonYears);
+        const revSlice = rev.slice(0, horizonYears);
+        const costSlice = cost.slice(0, horizonYears);
+        const dbSlice = db.slice(0, horizonYears);
+
+        // Monatsjahr-Auswahl
+        const yearIndex = (state.monthYear || 1) - 1;
+        const offset = yearIndex * 12;
+
+        const hasAll =
+          monthlyRevAll &&
+          monthlyRevAll.length >= offset + 12 &&
+          monthlyDbAll &&
+          monthlyDbAll.length >= offset + 12;
+
+        const mRevSel = hasAll
+          ? monthlyRevAll.slice(offset, offset + 12)
+          : mRevY1;
+
+        const mDbSel = hasAll
+          ? monthlyDbAll.slice(offset, offset + 12)
+          : mDbY1;
+
+        const labelEl = document.getElementById("monthYearLabel");
+        if (labelEl) labelEl.textContent = `Jahr ${state.monthYear}`;
+
+        // Hauptchart
+        let optionMain = {
+          tooltip: { trigger: "axis" },
+          legend: { top: 0 },
+          grid: { left: 40, right: 60, top: 40, bottom: 40 },
+        };
+        if (view === "cum") {
+          optionMain.xAxis = { type: "category", data: yearsSlice };
+          optionMain.yAxis = [
+            {
+              name: "€",
+              axisLabel: { formatter: (v) => v / 1000 + "k" },
+            },
+            { name: "ROI %", position: "right" },
+          ];
+          optionMain.series = [
+            {
+              name: "kum. Umsatz",
+              type: "line",
+              smooth: true,
+              data: cumRevSlice,
+            },
+            {
+              name: "kum. Kosten",
+              type: "line",
+              smooth: true,
+              data: cumCostSlice,
+            },
+            {
+              name: "kum. DB",
+              type: "line",
+              smooth: true,
+              data: cumDbSlice,
+            },
+            {
+              name: "ROI",
+              type: "line",
+              yAxisIndex: 1,
+              smooth: true,
+              data: cumRevSlice.map(
+                (d, i) => (d / cumCostSlice[i]) * 100
+              ),
+              markLine: {
+                silent: true,
+                lineStyle: { type: "dashed" },
+                data: [{ yAxis: 100 }],
+              },
+            },
+          ];
+        } else if (view === "yearly") {
+          optionMain.xAxis = { type: "category", data: yearsSlice };
+          optionMain.yAxis = {
+            axisLabel: { formatter: (v) => v / 1000 + "k" },
+          };
+          optionMain.series = [
+            { name: "Umsatz", type: "bar", data: revSlice },
+            { name: "Kosten", type: "bar", data: costSlice },
+            { name: "DB", type: "bar", data: dbSlice },
+          ];
+        } else {
+          const months = [
+            "Jan",
+            "Feb",
+            "Mrz",
+            "Apr",
+            "Mai",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Okt",
+            "Nov",
+            "Dez",
+          ];
+          optionMain.xAxis = { type: "category", data: months };
+          optionMain.yAxis = {
+            axisLabel: { formatter: (v) => v / 1000 + "k" },
+          };
+          optionMain.series = [
+            { name: "Umsatz", type: "bar", data: mRevSel },
+            {
+              name: "DB",
+              type: "bar",
+              data: mDbSel,
+              itemStyle: { color: "#ffb11a" },
+            },
+          ];
+        }
+        charts.chartMain.setOption(optionMain, true);
+
+        // Kosten-Donuts – auf Horizont skaliert
+        charts.chartCostsTotal.setOption(
+          {
+            color: ["#8b9ec5", "#39a844"],
+            series: [
+              {
+                type: "pie",
+                radius: ["52%", "78%"],
+                label: { show: true, formatter: "{d}%" },
+                labelLine: { show: false },
+                data: [
+                  { value: setupCost, name: "Setup" },
+                  {
+                    value: runCost * horizonYears,
+                    name: `Laufend (${horizonYears} Jahre)`,
+                  },
+                ],
+              },
+            ],
+          },
+          true
+        );
+        charts.chartCostsDetail.setOption(
+          {
+            color: ["#39a844", "#2d8ab7", "#ff7f2a", "#b9bec9"],
+            series: [
+              {
+                type: "pie",
+                radius: ["45%", "78%"],
+                label: { show: true, formatter: "{d}%" },
+                labelLine: { show: false },
+                data: [
+                  {
+                    value: state.costs.salary * horizonYears,
+                    name: "Gehalt",
+                  },
+                  {
+                    value: state.costs.car * horizonYears,
+                    name: "KFZ",
+                  },
+                  {
+                    value: state.costs.travel * horizonYears,
+                    name: "Reisen",
+                  },
+                  {
+                    value:
+                      (runCost -
+                        state.costs.salary -
+                        state.costs.car -
+                        state.costs.travel) *
+                      horizonYears,
+                    name: "Sonstiges",
+                  },
+                ],
+              },
+            ],
+          },
+          true
+        );
+
+        // Quartalschart – aus Monatswerten, bis Horizont
+        const qSeries = [];
+        for (let j = 0; j < horizonYears; j++) {
+          const qVals = [0, 0, 0, 0];
+          for (let m = 0; m < 12; m++) {
+            const idxM = j * 12 + m;
+            if (idxM >= monthlyRevAll.length) break;
+            qVals[Math.floor(m / 3)] += monthlyRevAll[idxM];
+          }
+          qSeries.push({
+            name: years[j],
+            type: "bar",
+            stack: "q",
+            data: qVals,
+          });
+        }
+
+        charts.chartQuarter.setOption(
+          {
+            tooltip: { trigger: "axis" },
+            legend: { top: 0 },
+            xAxis: {
+              type: "category",
+              data: ["Q1", "Q2", "Q3", "Q4"],
+            },
+            yAxis: {
+              axisLabel: { formatter: (v) => v / 1000 + "k" },
+            },
+            series: qSeries,
+          },
+          true
+        );
+
+        // Monatschart (unten) für ausgewähltes Jahr
+        charts.chartMonth.setOption(
+          {
+            tooltip: { trigger: "axis" },
+            legend: { top: 0 },
+            xAxis: {
+              type: "category",
+              data: [
+                "Jan",
+                "Feb",
+                "Mrz",
+                "Apr",
+                "Mai",
+                "Jun",
+                "Jul",
+                "Aug",
+                "Sep",
+                "Okt",
+                "Nov",
+                "Dez",
+              ],
+            },
+            yAxis: {
+              axisLabel: { formatter: (v) => v / 1000 + "k" },
+            },
+            series: [
+              {
+                name: "Umsatz",
+                type: "line",
+                smooth: true,
+                data: mRevSel,
+              },
+              {
+                name: "DB",
+                type: "line",
+                smooth: true,
+                data: mDbSel,
+                itemStyle: { color: "#ffb11a" },
+                lineStyle: { color: "#ffb11a" },
+              },
+            ],
+          },
+          true
+        );
+      }
+
+      function syncMonthTabs(horizonYears) {
+        document.querySelectorAll(".tab-year").forEach((btn) => {
+          const year = parseInt(btn.dataset.year, 10) || 1;
+          const withinRange = year <= horizonYears;
+          btn.disabled = !withinRange;
+          btn.classList.toggle("active", year === state.monthYear);
+          btn.style.opacity = withinRange ? "1" : "0.4";
+        });
+      }
+
+      // ==================== UI HANDLERS ====================
+      const overlay = document.getElementById("overlay");
+      document.getElementById("btnOpenOverlay").onclick =
+        document.getElementById("btnOpenOverlay2").onclick = () =>
+          overlay.classList.add("visible");
+      document.getElementById("btnCloseOverlay").onclick = () =>
+        overlay.classList.remove("visible");
+
+      document.getElementById("btnReset").onclick = () => {
+        Object.assign(state, {
+          revY1: defaults.revY1,
+          growth: defaults.growth.slice(),
+          histBase: defaults.histBase,
+          histGrowth: defaults.histGrowth,
+          costs: { ...defaults.costs },
+          setup: { ...defaults.setup },
+          mPattern: defaults.mPattern.slice(),
+          monthYear: 1,
+          yearHorizon: 5,
+        });
+
+        document.getElementById("inpRevY1").value = defaults.revY1;
+        document.getElementById("gY2").value = 20;
+        document.getElementById("gY3").value = 20;
+        document.getElementById("gY4").value = 20;
+        document.getElementById("gY5").value = 20;
+
+        document.getElementById("inpHistBase").value = defaults.histBase;
+        document.getElementById("inpHistGrowth").value =
+          defaults.histGrowth * 100;
+        document.getElementById("mPattern").value =
+          defaults.mPattern.join(" / ");
+
+        const costIds = [
+          "Salary",
+          "Car",
+          "Travel",
+          "Office",
+          "Comm",
+          "Supplies",
+          "OtherRun",
+        ];
+        costIds.forEach((k) => {
+          const el = document.getElementById("c" + k);
+          if (el) el.value = defaults.costs[k.toLowerCase()];
+        });
+
+        const setupIds = [
+          "Car",
+          "Laptop",
+          "Mon",
+          "Desk",
+          "Cont",
+          "Shelves",
+          "Other",
+        ];
+        setupIds.forEach((k) => {
+          const el = document.getElementById("s" + k);
+          if (el) el.value = defaults.setup["s" + k];
+        });
+
+        const slider = document.getElementById("yearHorizon");
+        const hLabel = document.getElementById("horizonLabel");
+        if (slider) slider.value = 5;
+        if (hLabel) hLabel.textContent = "5 Jahre";
+
+        document
+          .querySelectorAll(".tab-year")
+          .forEach((b) => b.classList.remove("active"));
+        const firstYear = document.querySelector('.tab-year[data-year="1"]');
+        if (firstYear) firstYear.classList.add("active");
+
+        recompute();
+      };
+
+      document.getElementById("btnApply").onclick = () => {
+        state.revY1 =
+          parseFloat(document.getElementById("inpRevY1").value) ||
+          defaults.revY1;
+
+        function parsePct(id, fallback) {
+          const raw = document.getElementById(id).value;
+          let v = parseFloat(String(raw).replace(",", "."));
+          if (isNaN(v)) v = fallback;
+          return v / 100;
+        }
+
+        state.growth = [
+          parsePct("gY2", 20),
+          parsePct("gY3", 20),
+          parsePct("gY4", 20),
+          parsePct("gY5", 20),
+        ];
+
+        state.histBase =
+          parseFloat(document.getElementById("inpHistBase").value) || 0;
+        state.histGrowth = parsePct("inpHistGrowth", 0);
+
+        state.mPattern = parsePattern(
+          document.getElementById("mPattern").value
+        );
+
+        [
+          "Salary",
+          "Car",
+          "Travel",
+          "Office",
+          "Comm",
+          "Supplies",
+          "OtherRun",
+        ].forEach((k) => {
+          const v = parseFloat(document.getElementById("c" + k).value);
+          state.costs[k.toLowerCase()] = isNaN(v)
+            ? defaults.costs[k.toLowerCase()]
+            : v;
+        });
+        ["Car", "Laptop", "Mon", "Desk", "Cont", "Shelves", "Other"].forEach(
+          (k) => {
+            const v = parseFloat(document.getElementById("s" + k).value);
+            state.setup["s" + k] = isNaN(v)
+              ? defaults.setup["s" + k]
+              : v;
+          }
+        );
+
+        overlay.classList.remove("visible");
+        recompute();
+      };
+
+      document.getElementById("scenarioSelect").onchange = (e) => {
+        state.scenario = parseFloat(e.target.value);
+        recompute();
+      };
+
+      // Tabs für kum / Jahr / Monat
+      document.querySelectorAll(".tab").forEach((tab) => {
+        tab.onclick = () => {
+          document
+            .querySelectorAll(".tab")
+            .forEach((t) => t.classList.remove("active"));
+          tab.classList.add("active");
+          recompute();
+        };
+      });
+
+      // Jahreswahl für Monatsverlauf
+      document.querySelectorAll(".tab-year").forEach((btn) => {
+        btn.onclick = () => {
+          const selectedYear = parseInt(btn.dataset.year, 10) || 1;
+          state.monthYear = Math.min(selectedYear, state.yearHorizon);
+          document
+            .querySelectorAll(".tab-year")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          recompute();
+        };
+      });
+
+      // Horizont-Slider
+      const slider = document.getElementById("yearHorizon");
+      const hLabel = document.getElementById("horizonLabel");
+      if (slider && hLabel) {
+        slider.oninput = (e) => {
+          const val = parseInt(e.target.value) || 5;
+          state.yearHorizon = val;
+          hLabel.textContent = val + " Jahre";
+          recompute();
+        };
+      }
+
+      // Print-Button
+      const btnPrint = document.getElementById("btnPrint");
+      if (btnPrint) {
+        btnPrint.onclick = () => {
+          window.print();
+        };
+      }
+
+      window.onresize = () =>
+        Object.values(charts).forEach((c) => c.resize());
+
+      recompute(); // Start
+    </script>
+  </body>
+</html>
